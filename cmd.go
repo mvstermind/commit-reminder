@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/mvstermind/commit-remainder/request"
 )
 
 func ParseArgs() {
@@ -13,6 +15,9 @@ func ParseArgs() {
 		return
 	}
 	username := flag.String("u", "", "github username")
+
+	link := request.FormUrl(username)
+	request.Send(link)
 
 	flag.Parse()
 }
