@@ -15,9 +15,9 @@ func ParseArgs() {
 		return
 	}
 	username := flag.String("u", "", "github username")
+	flag.Parse()
 
-	link := request.FormUrl(username)
+	link := request.FormUrl(*username)
 	request.Send(link)
 
-	flag.Parse()
 }
