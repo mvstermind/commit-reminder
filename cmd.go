@@ -18,6 +18,10 @@ func ParseArgs() {
 	flag.Parse()
 
 	link := request.FormUrl(*username)
-	request.Send(link)
+	err := request.Send(link)
+	if err != nil {
+		fmt.Println("error: ", err)
+		return
+	}
 
 }
