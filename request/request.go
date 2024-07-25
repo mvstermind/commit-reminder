@@ -5,7 +5,6 @@ import (
 	"io"
 	"net/http"
 	"sync"
-	"time"
 )
 
 var wg sync.WaitGroup
@@ -24,15 +23,6 @@ func Send(apiLink string) error {
 		return fmt.Errorf("couldn't get a connection %v", err)
 
 	}
-
-	// i want it to wait for couple of second if internet connection is trash
-	// then drop it
-	go func() {
-		time.Sleep(time.Second * 5)
-		if resp.StatusCode != http.StatusOK {
-			fmt.Println("couldn't get a responsoe")
-		}
-	}()
 
 	defer resp.Body.Close()
 
