@@ -25,7 +25,7 @@ func ParseArgs() time.Time {
 		fmt.Println("error: ", err)
 		return time.Time{}
 	}
-	latestCommit := jsonTime[1]
+	latestCommit := jsonTime[0]
 	return latestCommit
 
 }
