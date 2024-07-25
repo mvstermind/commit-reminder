@@ -14,11 +14,15 @@ func main() {
 }
 
 func commitTdayStatus(commitTime time.Time) bool {
-	if commitTime.Day() != time.Now().Day() {
-		fmt.Println("you commited tday")
+	commitTimeDay := commitTime.Day()
+	currDay := time.Now().Day()
+
+	if commitTimeDay == currDay {
+		fmt.Println("You have commited tday!!")
 		return true
 	}
-	fmt.Println("you haven't commited tday")
+
+	fmt.Println("You haven't commited tday :(")
 	return false
 
 }

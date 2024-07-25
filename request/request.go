@@ -10,7 +10,6 @@ import (
 
 func FormUrl(username string) string {
 
-	fmt.Println("value of username :", username)
 	link := fmt.Sprintf("https://api.github.com/users/%v/events", username)
 	return link
 }
