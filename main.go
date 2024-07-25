@@ -1,18 +1,23 @@
+// entry point
 package main
 
 import (
 	"fmt"
 	"time"
+
+	"github.com/mvstermind/commit-remainder/cmd"
 )
 
 func main() {
-	cmtTime := ParseArgs()
+	cmtTime := cmd.ParseArgs()
 	status := commitTdayStatus(cmtTime)
 
 	fmt.Println(status)
 
 }
 
+// Validates checks if person commited tday returning true if commit was today
+// and false if person hasn't commited yet
 func commitTdayStatus(commitTime time.Time) bool {
 	commitTimeDay := commitTime.Day()
 	currDay := time.Now().Day()
