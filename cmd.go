@@ -4,24 +4,28 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/mvstermind/commit-remainder/request"
 )
 
-func ParseArgs() {
+func ParseArgs() time.Time {
 
 	if len(os.Args) <= 1 {
 		fmt.Println("use -h or --help")
-		return
+		return time.Time{}
 	}
 	username := flag.String("u", "", "github username")
 	flag.Parse()
 
 	link := request.FormUrl(*username)
-	err := request.Send(link)
+	jsonTime, err := request.Send(link)
+
 	if err != nil {
 		fmt.Println("error: ", err)
-		return
+		return time.Time{}
 	}
+	latestCommit := jsonTime[1]
+	return latestCommit
 
 }

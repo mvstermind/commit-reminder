@@ -1,5 +1,8 @@
 package main
 
+import "fmt"
+
 func main() {
-	ParseArgs()
+	time := ParseArgs()
+	fmt.Println(time)
 }
