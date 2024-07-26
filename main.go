@@ -3,16 +3,19 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/mvstermind/commit-remainder/cmd"
 )
 
 func main() {
-	cmtTime := cmd.ParseArgs()
-	status := commitTdayStatus(cmtTime)
-
-	fmt.Println(status)
+	cmtTime, err := cmd.ParseArgs()
+	if err != nil {
+		log.Printf("err: %v", err)
+		return
+	}
+	_ = commitTdayStatus(cmtTime)
 
 }
 
