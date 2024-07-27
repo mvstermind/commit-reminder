@@ -31,16 +31,16 @@ func commitTdayStatus(commitTime []time.Time) {
 	}
 
 	emoji := '\U0001F389'
-	if commitTimeDay == currDay && len(commitTime) == 1 {
+	if commitTimeDay == currDay {
 		fmt.Printf("\n%c  You have commited tday !! %c\n\n", emoji, emoji)
 		return
 	}
 
-	if commitTimeDay == currDay && len(commitTime) > 1 {
-		fmt.Printf("\n%c  You have commited tday: %v times!! %c\n\n", emoji, len(commitTime), emoji)
-		return
-
-	}
+	// if commitTimeDay == currDay && len(commitTime) > 1 {
+	// 	fmt.Printf("\n%c  You have commited tday: %v times!! %c\n\n", emoji, len(commitTime), emoji)
+	// 	return
+	//
+	// }
 
 	fmt.Println("You haven't commited tday :(")
 
