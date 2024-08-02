@@ -1,4 +1,4 @@
-module DidICommit
+module github.com/mvstermind/did-i-commit
 
 go 1.22.5
 
