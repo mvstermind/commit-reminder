@@ -1,5 +1,5 @@
 ## Needs:
-- print info about commit frequency []
+- print info about commit frequency [x]
 - create pretty formatted output []
 - option to run in a background? []
 - option to give reminds in set time blocks (eg. each 2h to commit if did not yet) []

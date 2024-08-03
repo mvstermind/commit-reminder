@@ -13,24 +13,24 @@ type Event struct {
 	CreatedAt string `json:"created_at"`
 }
 
-func Get(username string) error {
+func Get(username string) (int, error) {
 	link := formUrl(username)
 
 	req, err := http.Get(link)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	bytebody, err := io.ReadAll(req.Body)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	// Fill in json response into slice
 	var events []Event
 	err = json.Unmarshal(bytebody, &events)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	// Modify json response to match format of currentDate (declared in howManyFunc)
@@ -42,8 +42,7 @@ func Get(username string) error {
 	}
 	todayCommmits := commitsToday(refactoredDate)
 
-	fmt.Println(todayCommmits)
-	return nil
+	return todayCommmits, nil
 }
 
 func formUrl(uname string) string {
