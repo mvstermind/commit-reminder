@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/mvstermind/did-i-commit/cmd/prettify"
-	"github.com/mvstermind/did-i-commit/cmd/request"
+	"github.com/mvstermind/commit-reminder/prettify"
+	"github.com/mvstermind/commit-reminder/request"
 	minicli "github.com/mvstermind/mini-cli"
 )
 
