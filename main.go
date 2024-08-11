@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/mvstermind/commit-reminder/prettify"
@@ -26,8 +27,17 @@ func main() {
 	argList := minicli.AddArguments(&usernameArg, &styleArg)
 	argMap := argList.Execute()
 
-	username := argMap["-u"]
+	username, ok := argMap["-u"]
+	if !ok {
+		return
+	}
+
 	style := argMap["-s"]
+
+	if argMap["-s"] == "" {
+		fmt.Println("styles: 'd-_-b', 'default'")
+		return
+	}
 
 	todaysCommits, err := request.Get(username)
 	if err != nil {

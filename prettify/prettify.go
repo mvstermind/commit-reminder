@@ -22,6 +22,9 @@ func Output(value int, style, username string) {
 	}
 
 	switch style {
+	case "default":
+		fmt.Printf("%v commited: %v\n", username, valueStr)
+
 	case "d-_-b":
 		fmt.Printf("d-_-b %s commited today: %v times d-_-b\n", username, valueStr)
 
@@ -29,4 +32,5 @@ func Output(value int, style, username string) {
 		fmt.Printf("%v commited: %v\n", username, valueStr)
 
 	}
+
 }
