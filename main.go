@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
-	"github.com/mvstermind/commit-reminder/prettify"
 	"github.com/mvstermind/commit-reminder/request"
 	minicli "github.com/mvstermind/mini-cli"
 )
@@ -18,8 +19,8 @@ func main() {
 
 	styleArg := minicli.Arg{
 		ShortCmd: "s",
-		LongCmd:  "style",
-		Usage:    "Modify output of displayed commit info",
+		LongCmd:  "save",
+		Usage:    "Save username",
 		Required: false,
 	}
 
@@ -31,12 +32,40 @@ func main() {
 		return
 	}
 
-	style := argMap["-s"]
-
 	todaysCommits, err := request.Get(username)
 	if err != nil {
 		log.Println("error: ", err)
+
 	}
-	prettify.Output(todaysCommits, style, username)
+
+	save, ok := argMap["-s"]
+	if ok {
+
+		saveUsername(save)
+	}
+
+	printCommits(todaysCommits, username)
+
+}
+
+func printCommits(commits int, username string) {
+	switch commits {
+
+	case 0:
+		fmt.Printf("%s haven't commited yet today\n", username)
+	case 1:
+		fmt.Printf("%s commited once today\n", username)
+
+	case 2:
+		fmt.Printf("%s commited twice today\n", username)
+
+	default:
+		fmt.Printf("%s commited %d today\n", username, commits)
+	}
+}
+
+func saveUsername(uname string) bool {
+
+	os.WriteFile("./username.txt", []byte(uname), 644)
 
 }
