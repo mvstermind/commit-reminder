@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/mvstermind/commit-reminder/prettify"
@@ -33,11 +32,6 @@ func main() {
 	}
 
 	style := argMap["-s"]
-
-	if argMap["-s"] == "" {
-		fmt.Println("styles: 'd-_-b', 'default'")
-		return
-	}
 
 	todaysCommits, err := request.Get(username)
 	if err != nil {
