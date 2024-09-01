@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -14,7 +15,7 @@ func main() {
 		ShortCmd: "u",
 		LongCmd:  "user",
 		Usage:    "Add username flag to get info about commit frequency",
-		Required: true,
+		Required: false,
 	}
 
 	styleArg := minicli.Arg{
@@ -27,9 +28,16 @@ func main() {
 	argList := minicli.AddArguments(&usernameArg, &styleArg)
 	argMap := argList.Execute()
 
-	username, ok := argMap["-u"]
-	if !ok {
-		return
+	username := argMap["-u"]
+
+	if username == "" {
+		var err error
+		username, err = loadUname()
+
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 
 	todaysCommits, err := request.Get(username)
@@ -38,10 +46,9 @@ func main() {
 
 	}
 
-	save, ok := argMap["-s"]
-	if ok {
-
-		saveUsername(save)
+	save := argMap["-s"]
+	if save == "" {
+		saveUsername(username)
 	}
 
 	printCommits(todaysCommits, username)
@@ -64,8 +71,48 @@ func printCommits(commits int, username string) {
 	}
 }
 
-func saveUsername(uname string) bool {
+func saveUsername(uname string) {
 
-	os.WriteFile("./username.txt", []byte(uname), 644)
+	dir, err := os.Getwd()
+	if err != nil {
+		return
+	}
+
+	fileNdir := fmt.Sprintf("%v/username.txt", dir)
+
+	file, err := os.OpenFile(fileNdir, os.O_WRONLY, 0666)
+	if err != nil {
+		err := fmt.Errorf("Error: %v\n", err)
+		fmt.Printf(err.Error())
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(uname)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+}
+
+func loadUname() (string, error) {
+
+	dir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+
+	fileNdir := fmt.Sprintf("%v/username.txt", dir)
+	content, err := os.ReadFile(fileNdir)
+
+	if len(content) == 0 {
+		return "", errors.New("no username saved")
+	}
+
+	if err != nil {
+		return "", err
+	}
+
+	fileContent := string(content)
+	return fileContent, nil
 
 }
